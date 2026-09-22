@@ -235,34 +235,67 @@ class Game:
         dark_color = tuple(max(channel - 55, 0) for channel in color)
         black = (20, 20, 27)
 
-        body = pygame.Rect(center_x - 10, center_y - 3, 16, 10)
-        pygame.draw.rect(self.screen, color, body)
-        pygame.draw.rect(self.screen, WHITE, body, 1)
+        # A crude side profile based on a chess knight: raised neck, ear, and muzzle.
         pygame.draw.polygon(
             self.screen,
             color,
             [
-                (center_x + direction * 5, center_y - 5),
-                (center_x + direction * 10, center_y - 11),
-                (center_x + direction * 12, center_y - 5),
-                (center_x + direction * 7, center_y + 2),
+                (center_x - direction * 9, center_y + 12),
+                (center_x - direction * 9, center_y + 3),
+                (center_x - direction * 7, center_y - 6),
+                (center_x - direction * 4, center_y - 12),
+                (center_x - direction * 1, center_y - 17),
+                (center_x + direction * 3, center_y - 11),
+                (center_x + direction * 8, center_y - 9),
+                (center_x + direction * 10, center_y - 5),
+                (center_x + direction * 14, center_y - 3),
+                (center_x + direction * 16, center_y + 1),
+                (center_x + direction * 13, center_y + 5),
+                (center_x + direction * 7, center_y + 6),
+                (center_x + direction * 5, center_y + 12),
+            ],
+        )
+        pygame.draw.line(
+            self.screen,
+            WHITE,
+            (center_x - direction * 9, center_y + 12),
+            (center_x - direction * 9, center_y + 3),
+            1,
+        )
+        pygame.draw.polygon(
+            self.screen,
+            dark_color,
+            [
+                (center_x - direction * 8, center_y + 11),
+                (center_x - direction * 13, center_y + 7),
+                (center_x - direction * 10, center_y + 2),
+                (center_x - direction * 12, center_y - 3),
+                (center_x - direction * 8, center_y - 6),
+                (center_x - direction * 7, center_y - 12),
+                (center_x - direction * 3, center_y - 17),
+                (center_x - direction * 4, center_y - 9),
+                (center_x - direction * 5, center_y - 1),
             ],
         )
         pygame.draw.polygon(
             self.screen,
             dark_color,
             [
-                (center_x + direction * 8, center_y - 10),
-                (center_x + direction * 12, center_y - 14),
-                (center_x + direction * 14, center_y - 5),
-                (center_x + direction * 9, center_y - 4),
+                (center_x - direction * 1, center_y - 16),
+                (center_x + direction * 2, center_y - 22),
+                (center_x + direction * 5, center_y - 11),
             ],
         )
-        pygame.draw.rect(self.screen, dark_color, (center_x - 7, center_y + 5, 4, 8))
-        pygame.draw.rect(self.screen, dark_color, (center_x + 3, center_y + 5, 4, 8))
-        pygame.draw.rect(self.screen, dark_color, (center_x - 12, center_y - 5, 4, 3))
-        pygame.draw.rect(self.screen, black, (center_x + direction * 10, center_y - 8, 2, 2))
-        pygame.draw.rect(self.screen, black, (center_x - direction * 9, center_y - 7, 5, 2))
+        pygame.draw.rect(self.screen, WHITE, (center_x + direction * 5, center_y - 7, 4, 4))
+        pygame.draw.rect(self.screen, black, (center_x + direction * 7, center_y - 6, 2, 3))
+        pygame.draw.rect(self.screen, black, (center_x + direction * 14, center_y - 1, 3, 2))
+        pygame.draw.line(
+            self.screen,
+            black,
+            (center_x + direction * 13, center_y + 4),
+            (center_x + direction * 8, center_y + 4),
+            1,
+        )
 
     def draw_panel(self, inputs):
         pygame.draw.rect(self.screen, BACKGROUND, (PANEL_X, 0, WIDTH - PANEL_X, HEIGHT))
