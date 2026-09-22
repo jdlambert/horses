@@ -1,0 +1,18 @@
+{
+  "$schema": "https://rcade.dev/manifest.schema.json",
+  "name": "horses",
+  "display_name": "Horses",
+  "description": "horsing around",
+  "visibility": "internal",
+  "authors": [
+    {
+      "display_name": "jacob lambert"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "@rcade/input-classic",
+      "version": "1.0.0"
+    }
+  ]
+}
