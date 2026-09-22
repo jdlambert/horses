@@ -116,12 +116,24 @@ The game reads controls from `@rcade/plugin-input-classic` on the cabinet:
 |---------|--------|
 | 1P START | Start a one-player game or restart |
 | 2P START | Start a two-player game or restart |
-| D-PAD | Select a legal knight move |
+| Spinner | Select board size before starting, or a legal knight move during play |
+| D-PAD | Select board size before starting, or a legal knight move during play |
 | A BUTTON | Confirm the selected move |
 | B BUTTON | Select the previous legal move |
 
 In one-player mode, Player 2 is controlled by the AI. In two-player mode, the
 second player's D-PAD, A, and B controls are used during Player 2's turn.
+Each player's spinner selects moves using its signed rotation direction.
+
+Before starting, Player 1 can select a 4x4, 6x6, or 8x8 board. The default is
+4x4.
+
+Spinner input comes from `@rcade/plugin-input-spinners` and is read using its
+accumulated step-delta API.
+
+When running the Vite server outside the cabinet, keyboard fallback controls
+are available: `1`/`2` start games, Player 1 uses `WASD` + `F`/`G`, and Player
+2 uses `IJKL` + `;`/`'`.
 
 ## Deployment
 

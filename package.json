@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "@rcade/plugin-input-classic": "^0.2.1",
+        "@rcade/plugin-input-spinners": "^0.2.3",
         "pyodide": "^0.27.0"
     }
 }
