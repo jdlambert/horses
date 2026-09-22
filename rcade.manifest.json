@@ -3,7 +3,7 @@
   "name": "horses",
   "display_name": "Horses",
   "description": "horsing around",
-  "visibility": "internal",
+  "visibility": "public",
   "authors": [
     {
       "display_name": "jacob lambert"

@@ -128,6 +128,10 @@ Each player's spinner selects moves using its signed rotation direction.
 Before starting, Player 1 can select a 4x4, 6x6, or 8x8 board. The default is
 4x4.
 
+Before starting a one-player game, Player 2's spinner or D-pad selects the AI
+mode. The default is `RANDOM`; the other option is `SMART`, which prefers moves
+that leave the AI with more future legal moves.
+
 Spinner input comes from `@rcade/plugin-input-spinners` and is read using its
 accumulated step-delta API.
 

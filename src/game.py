@@ -13,6 +13,7 @@ HEIGHT = 262
 FPS = 60
 BOARD_SIZE = 4
 BOARD_SIZES = (4, 6, 8)
+AI_MODES = ("RANDOM", "SMART")
 BOARD_PIXELS = 256
 PANEL_X = BOARD_PIXELS
 
@@ -62,6 +63,7 @@ class Game:
         self.running = True
         self.game_started = False
         self.two_player = False
+        self.ai_mode_index = 0
         self.board_size = BOARD_SIZE
         self.board_size_index = BOARD_SIZES.index(BOARD_SIZE)
         self.cell_size = BOARD_PIXELS // self.board_size
@@ -127,7 +129,20 @@ class Game:
         return True
 
     def choose_ai_move(self, moves):
-        return random.choice(moves)
+        if AI_MODES[self.ai_mode_index] == "RANDOM":
+            return random.choice(moves)
+
+        best_move = moves[0]
+        best_options = -1
+        for move in moves:
+            row, column = move
+            self.visited[row][column] = 2
+            options = len(get_legal_moves(move, self.visited, self.board_size))
+            self.visited[row][column] = 0
+            if options > best_options:
+                best_move = move
+                best_options = options
+        return best_move
 
     def update_human(self, inputs, player):
         legal_moves = get_legal_moves(self.positions[player], self.visited, self.board_size)
@@ -157,6 +172,13 @@ class Game:
                 self.board_size_index = (self.board_size_index - 1) % len(BOARD_SIZES)
             if self.was_pressed(inputs, "p1", "right") or self.was_pressed(inputs, "p1", "down"):
                 self.board_size_index = (self.board_size_index + 1) % len(BOARD_SIZES)
+            spinner_delta = int(inputs["p2"]["spinner"])
+            if spinner_delta:
+                self.ai_mode_index = (self.ai_mode_index + spinner_delta) % len(AI_MODES)
+            if self.was_pressed(inputs, "p2", "left") or self.was_pressed(inputs, "p2", "up"):
+                self.ai_mode_index = (self.ai_mode_index - 1) % len(AI_MODES)
+            if self.was_pressed(inputs, "p2", "right") or self.was_pressed(inputs, "p2", "down"):
+                self.ai_mode_index = (self.ai_mode_index + 1) % len(AI_MODES)
             if self.was_pressed(inputs, "system", "start_1p"):
                 self.start_game(False)
             elif self.was_pressed(inputs, "system", "start_2p"):
@@ -298,10 +320,12 @@ class Game:
             self.draw_text("{} x {}".format(BOARD_SIZES[self.board_size_index], BOARD_SIZES[self.board_size_index]), (PANEL_X + 8, 78), self.font_medium, WHITE)
             self.draw_text("SPIN / D-PAD", (PANEL_X + 8, 108), self.font_small, MUTED)
             self.draw_text("to select size", (PANEL_X + 8, 126), self.font_small, MUTED)
-            self.draw_text("1P", (PANEL_X + 8, 151), self.font_medium, P1_COLOR)
-            self.draw_text("1P START", (PANEL_X + 8, 160), self.font_small, MUTED)
-            self.draw_text("2P", (PANEL_X + 8, 187), self.font_medium, P2_COLOR)
-            self.draw_text("2P START", (PANEL_X + 8, 210), self.font_small, MUTED)
+            self.draw_text("AI: {}".format(AI_MODES[self.ai_mode_index]), (PANEL_X + 8, 143), self.font_small, HIGHLIGHT)
+            self.draw_text("P2: SPIN", (PANEL_X + 8, 159), self.font_small, MUTED)
+            self.draw_text("1P", (PANEL_X + 8, 181), self.font_medium, P1_COLOR)
+            self.draw_text("1P START", (PANEL_X + 8, 198), self.font_small, MUTED)
+            self.draw_text("2P", (PANEL_X + 8, 217), self.font_medium, P2_COLOR)
+            self.draw_text("2P START", (PANEL_X + 8, 236), self.font_small, MUTED)
             return
 
         if self.game_over:
