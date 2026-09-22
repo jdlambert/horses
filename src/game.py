@@ -4,6 +4,7 @@
 # ///
 
 import asyncio
+import random
 import pygame
 
 # RCade game dimensions
@@ -126,17 +127,7 @@ class Game:
         return True
 
     def choose_ai_move(self, moves):
-        best_move = moves[0]
-        best_options = -1
-        for move in moves:
-            row, column = move
-            self.visited[row][column] = 2
-            options = len(get_legal_moves(move, self.visited, self.board_size))
-            self.visited[row][column] = 0
-            if options > best_options:
-                best_move = move
-                best_options = options
-        return best_move
+        return random.choice(moves)
 
     def update_human(self, inputs, player):
         legal_moves = get_legal_moves(self.positions[player], self.visited, self.board_size)
